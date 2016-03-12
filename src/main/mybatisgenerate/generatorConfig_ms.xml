@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+ <classPathEntry location="C:/Users/congyt/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar" />
+  <context id="context1" >
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/ms?useUnicode=true&amp;characterEncoding=UTF-8" userId="root" password="linkdata" />
+    <javaModelGenerator targetPackage="com.yqt.video.bss.dao.model" targetProject="bss" />
+    <sqlMapGenerator targetPackage="com.yqt.video.bss.dao.map" targetProject="bss" />
+    <javaClientGenerator targetPackage="com.yqt.video.bss.dao.client" targetProject="bss" type="XMLMAPPER" />
+    <!--
+    <table  tableName="t_user" >
+    <columnOverride column="???" property="???" />
+    </table>
+    -->
+    <table schema="" tableName="t_zoom_account" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="false">
+	</table>
+  </context>
+</generatorConfiguration>

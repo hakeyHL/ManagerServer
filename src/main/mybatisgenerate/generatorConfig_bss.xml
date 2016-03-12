@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+ <classPathEntry location="C:/Users/congyt/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar" />
+  <context id="context1" >
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://118.144.78.147:3306/yunqitong_bss_new?useUnicode=true&amp;characterEncoding=UTF-8" userId="root" password="linkdata" />
+    <javaModelGenerator targetPackage="cn.yunqitong.ms.bss.dao.model" targetProject="ms" />
+    <sqlMapGenerator targetPackage="cn.yunqitong.ms.bss.dao.map" targetProject="ms" />
+    <javaClientGenerator targetPackage="cn.yunqitong.ms.bss.dao.client" targetProject="ms" type="XMLMAPPER" />
+    <!--  
+    <table schema="" tableName="t_province" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+	
+	 <table schema="" tableName="t_city" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+	
+	 <table schema="" tableName="t_product" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+	
+	 <table schema="" tableName="t_user_source" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+	 <table schema="" tableName="t_product" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+	
+	 <table schema="" tableName="t_product" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+	 <table schema="" tableName="t_operate_flow" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+	-->
+	 <table schema="" tableName="t_user" enableCountByExample="true"
+			enableUpdateByExample="true" enableDeleteByExample="true"
+			enableSelectByExample="true" selectByExampleQueryId="true">
+	</table>
+  </context>
+</generatorConfiguration>

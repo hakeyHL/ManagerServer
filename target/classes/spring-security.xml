@@ -1,0 +1,65 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security.xsd"> 
+    
+    <!--认证处理入口-->
+    <http auto-config="false"  use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+		<intercept-url pattern="/loginChoose" access="permitAll" />
+		<intercept-url pattern="/version.jsp" access="permitAll" />
+		<intercept-url pattern="/jsp/login.jsp" access="permitAll" />
+		<intercept-url pattern="/manager/version" access="permitAll" />
+	 	<intercept-url pattern="/getValidateCode" access="permitAll" />
+	 	<intercept-url pattern="/resources/**" access="permitAll" />
+	 	<intercept-url pattern="/**" access="isAuthenticated()" />
+		<custom-filter position="FORM_LOGIN_FILTER" ref="customUsernamePasswordAuthenticationFilter" />
+		<logout logout-success-url="/jsp/login.jsp" logout-url="/loginout" />
+	</http>
+
+	<!-- 加载国际化-->
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="basename" value="classpath:messages_zh_CN" />
+	</beans:bean>
+	
+	<!-- 表单登录-->
+	<beans:bean  id="customUsernamePasswordAuthenticationFilter" class="cn.yunqitong.security.CustomUsernamePasswordAuthenticationFilter">  
+		<beans:property name="filterProcessesUrl" value="/loginin"></beans:property>
+		<beans:property name="usernameParameter" value="username"></beans:property>
+		<beans:property name="passwordParameter" value="password"></beans:property>
+		
+		<beans:property name="authenticationSuccessHandler" ref="simpleUrlAuthenticationSuccessHandler"></beans:property>
+		<beans:property name="authenticationFailureHandler" ref="simpleUrlAuthenticationFailureHandler"></beans:property>
+		<beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
+    </beans:bean>
+    
+    <!-- 认证成功-->    
+	<beans:bean id="simpleUrlAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/jsp/index.jsp"></beans:property>
+		<beans:property name="alwaysUseDefaultTargetUrl" value="true"></beans:property>
+	</beans:bean>
+	
+	<!-- 认证失败-->    
+	<beans:bean id="simpleUrlAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/loginChoose"></beans:property>
+	</beans:bean>
+	
+	<!-- 认证管理-->  
+	 <authentication-manager alias="authenticationManager">
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource_ms"
+                users-by-username-query="select name username,password password, enabled enabled from t_users where name=?"
+                authorities-by-username-query="select user_name username, name role from t_user_roles where user_name=?  " />
+        </authentication-provider>
+    </authentication-manager>
+	
+	<!-- 认证处理过滤器切入点-->
+	<beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">  
+	    <beans:property name="loginFormUrl" value="/loginChoose" />  
+	</beans:bean>  
+</beans:beans>

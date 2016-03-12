@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd    
+            http://www.springframework.org/schema/context     
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd    
+            http://www.springframework.org/schema/mvc    
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/tx 
+            http://www.springframework.org/schema/tx/spring-tx.xsd ">
+	<!-- 开启注解配置 -->
+	<mvc:annotation-driven />
+	<!-- 扫描logic层 -->
+	<context:component-scan base-package="cn.yunqitong.**.logic"></context:component-scan>
+	<!-- 属性文件读取 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:system.properties" />
+	</bean>
+	<!-- MS数据源配置 -->
+	<bean id="dataSource_ms" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${ms.jdbc.url}" />
+		<property name="username" value="${ms.jdbc.username}" />
+		<property name="password" value="${ms.jdbc.password}" />
+		<property name="maxActive" value="50" />
+		<property name="maxIdle" value="200" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="timeBetweenEvictionRunsMillis" value="3600000" />
+		<property name="minEvictableIdleTimeMillis" value="3600000" />
+	</bean>
+	<bean id="sqlSessionFactory_ms" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource_ms" />
+		<property name="mapperLocations" value="classpath:cn/yunqitong/ms/ms/dao/map/*.xml" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+							reasonable=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory_ms"></property>
+		<property name="basePackage" value="cn.yunqitong.ms.ms.dao.client" />
+	</bean>
+
+	<!-- AS数据源配置 -->
+	  <bean id="dataSource_as" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${as.jdbc.url}" />
+		<property name="username" value="${as.jdbc.username}" />
+		<property name="password" value="${as.jdbc.password}" />
+		<property name="maxActive" value="50" />
+		<property name="maxIdle" value="200" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="timeBetweenEvictionRunsMillis" value="3600000" />
+		<property name="minEvictableIdleTimeMillis" value="3600000" />
+	</bean>
+	<bean id="sqlSessionFactory_as" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource_as" />
+		<property name="mapperLocations" value="classpath:cn/yunqitong/ms/as/dao/map/*.xml" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+							reasonable=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory_as"></property>
+		<property name="basePackage" value="cn.yunqitong.ms.as.dao.client" />
+	</bean>
+
+</beans>  
